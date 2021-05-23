@@ -5,18 +5,20 @@ const products = [
     {id: 4, title: 'Gamepad', price: 50},
 ];
 //Функция для формирования верстки каждого товара
-const renderProduct = (title, price) => {
+const renderProduct = (title = 'Empty', price = 0) => {
     return `<div class="product-item">
                 <h3>${title}</h3>
-                <p>${price}</p>
+                <p>${price}$</p>
                 <button class="buy-btn">Купить</button>
             </div>`
 };
 
 const renderPage = list => {
-    const productsList = list.map(item => renderProduct(item.title, item.price));
-    console.log(productsList);
-    document.querySelector('.products').innerHTML = productsList;
+	const productsContainer = document.querySelector('.products');
+    list.forEach(item => {
+		const htmlProduct = renderProduct(item.title, item.price);
+		productsContainer.innerHTML += htmlProduct;
+	});
 };
 
 renderPage(products);
