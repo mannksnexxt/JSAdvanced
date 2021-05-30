@@ -12,8 +12,8 @@ class ProductsList {
 			{id: 4, title: 'Gamepad', price: 50},
 		]
 	}
-	getProductsQuantity() {
-		return this.goods.length;
+	getTotalPrice() {
+		return this.goods.reduce( (sum, item) => sum += item.price, 0 );
 	}
 	render() {
 		const container = document.querySelector(this.container);
