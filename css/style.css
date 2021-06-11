@@ -13,13 +13,14 @@ a {
 body {
 	display: grid;
 	grid-template-rows: auto 1fr auto;
+	overflow-x: hidden;
 }
 header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	position: relative;
-	padding: 16px 32px;
+	padding: 0 32px;
 	background: #f5f6fa;
 	box-shadow: 0px 4px 1px 0px rgba(34, 60, 80, 0.03);
 }
@@ -32,6 +33,34 @@ button {
 	cursor: pointer;
 	transition: .1s;
 }
+.header__controls {
+	padding: 16px 24px;
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+.header__user-search {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: #34495e;
+}
+.header__user-search input {
+	color: #34495e;
+	cursor: pointer;
+	border: none;
+	padding: 8px 16px;
+	background: transparent;
+	outline: none;
+}
+.header__user-search input:focus {
+	border-bottom: 1px solid #2d3436;
+}
+.header__user-search input:hover {
+	border-bottom: 1px solid #34495e;
+}
+
+
 .btn-cart {
 	padding: 16px 24px;
 	font-size: .95em;
@@ -43,9 +72,12 @@ button {
 	background: #353b48;
 	color: #f5f6fa;
 }
+.btn-cart.active {
+	background: #353b48;
+	color: #f5f6fa;
+}
 
 #cart-toggle {display: none;}
-#cart-toggle:checked ~ .cart {transform: translateX(0);}
 
 .cart {
 	transition: .2s;
@@ -59,6 +91,12 @@ button {
 	padding: 18px 24px;
 	background: #fff;
 	box-shadow: 0px 8px 5px 7px rgba(34, 60, 80, 0.03);
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto 1fr auto;
+}
+.cart.active {
+	transform: translateX(0);
 }
 .cart h2 {
 	font-size: 20px;
@@ -112,7 +150,29 @@ button {
 	color: #576574;
 	font-size: 20px;
 }
+.cart__total-price {
+	padding: 18px 8px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 
+}
+.cart__total-price h3 {
+	font-size: 18px;
+	color: #34495e;
+}
+
+.cart__total-price span {
+	font-size: 20px;
+	color: #2d3436;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+.cart__total-price span span {
+	font-size: 24px;
+	color: #10ac84;
+}
 
 .products {
 	padding: 32px 46px;
@@ -149,4 +209,8 @@ button {
 .product-item button:hover {
 	background: #34495e;
 	color: #ecf0f1;
+}
+.no-data {
+	font-size: 20px;
+	color: #535c68;
 }
