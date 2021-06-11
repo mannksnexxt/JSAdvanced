@@ -4,20 +4,85 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+	<script src="https://unpkg.com/vue@next"></script>
+	<link rel="stylesheet" href="css/style.css">
 	<title>Shop</title>
 </head>
 <body>
+	<div id="app">
+		<header>
+			<a class="logo" href="#">
+				<h1>SomeLogo</h1>
+			</a>
+			
+			<div class="header__controls">
+				<div class="header__user-search">
+					<input type="text" v-model="userSearch">
+					<i class="fas fa-search"></i>
+				</div>
+							
+				<label
+					for="cart-toggle"
+					:class="[ 'btn-cart', {active: cartShow} ]"
+					@click="cartShow = !cartShow">
+					<i class="fas fa-shopping-cart"></i>
+					Корзина
+				</label>
+				<input type="checkbox" id="cart-toggle">
+			</div>
 
-	<header>
-        <button class="btn-cart" type="button">Корзина</button>
-    </header>
+			<div :class="['cart', {active: cartShow}]">
+				<h2>Cart</h2>		
+				<div class="cart__items">
+					<div class="cart__item" v-for="good in cartItems">
+						<img :src="imgUrl">
+						<div class="cart__item-description">
+							<h3>{{ good.product_name }}</h3>
+							<div class="cart__item-quantity">
+							   <button
+								   class="reduce-item-quantity"
+								   @click="reduceCartItem(good.id_product)">
+								   <i class="fas fa-minus"></i>
+							   </button>
 
-    <main>
-        <div class="products"></div>
-    </main>
+							   <span>{{ good.quantity }}</span>
 
+							   <button 
+									class="increase-item-quantity"
+									@click="increaseCartItem(good.id_product)">
+								   <i class="fas fa-plus"></i>
+							   </button>
+							</div>
+							<div class="cart__item-price">
+								<span>{{ good.price * good.quantity }}</span>$
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="cart__total-price">
+					<h3>Total price: </h3>
+					<span>{{ cartTotalPrice }}<span>$</span></span>
+				</div>
+			</div>
+	    </header>
 
+	    <main>
+	        <div class="products">
+				<template v-if="filteredItems.length">
+					<div class="product-item" v-for="item in filteredItems" :key="item.id_product">
+						<img :src="imgUrl"/>
+						<h3>{{ item.product_name }}</h3>
+						<p>{{ item.name }}</p>
+						<button class="buy-btn" @click="addToCart(item.id_product)">Купить</button>
+					</div>
+				</template>
+
+				<span class="no-data" v-else>No data...</span>
+			</div>
+	    </main>
+
+	</div>
     <script src="js/main.js"></script>
 </body>
 </html>
