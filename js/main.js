@@ -1,6 +1,7 @@
 const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 
 
+
 const App = {
 	data() {
 		return {
@@ -8,8 +9,16 @@ const App = {
 			cartItems: [],
 			userSearch: '',
 			imgUrl: 'https://via.placeholder.com/300x220',
-			cartShow: false
+			cartShow: false,
+			requestError: false
 		}
+	},
+	components: {
+		Cart,
+		SearchField,
+		CartToggle,
+		Products,
+		RequestError
 	},
 	methods: {
 		addToCart(id) {
@@ -37,26 +46,14 @@ const App = {
 			}
 		}
 	},
-	computed: {
-		cartTotalPrice() {
-			return this.cartItems.reduce( (sum, item) => {
-				return sum += item.price * item.quantity;
-			}, 0);
-		},
-		filteredItems() {
-			const searchValue = this.userSearch.trim().toLowerCase();
-			if ( searchValue ) {
-				return this.items.filter( item => {
-					return  item.product_name.toLowerCase().includes(searchValue);
-				});
-			}
-			return this.items;
-		}
-	},
 	async mounted() {
-		const data = await fetch(`${API}/catalogData.json`);
-		this.items = await data.json();
-
+		try {
+			const data = await fetch(`${API}/atalogData.json`);
+			this.items = await data.json();	
+		} catch (error) {
+			this.requestError = true;
+		}
+		
 		const cartData = await fetch(`${API}/getBasket.json`);
 		let {contents} = await cartData.json();
 		this.cartItems = contents;

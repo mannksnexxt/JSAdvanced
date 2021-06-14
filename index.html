@@ -18,71 +18,38 @@
 			
 			<div class="header__controls">
 				<div class="header__user-search">
-					<input type="text" v-model="userSearch">
-					<i class="fas fa-search"></i>
+					<search-field v-model:search="userSearch"/>
 				</div>
-							
-				<label
-					for="cart-toggle"
-					:class="[ 'btn-cart', {active: cartShow} ]"
-					@click="cartShow = !cartShow">
-					<i class="fas fa-shopping-cart"></i>
-					Корзина
-				</label>
-				<input type="checkbox" id="cart-toggle">
+				
+				<cart-toggle v-model:is-visible="cartShow"/>
 			</div>
+			
+			<cart :goods="cartItems" :class="['cart', {active: cartShow}]"/>
 
-			<div :class="['cart', {active: cartShow}]">
-				<h2>Cart</h2>		
-				<div class="cart__items">
-					<div class="cart__item" v-for="good in cartItems">
-						<img :src="imgUrl">
-						<div class="cart__item-description">
-							<h3>{{ good.product_name }}</h3>
-							<div class="cart__item-quantity">
-							   <button
-								   class="reduce-item-quantity"
-								   @click="reduceCartItem(good.id_product)">
-								   <i class="fas fa-minus"></i>
-							   </button>
-
-							   <span>{{ good.quantity }}</span>
-
-							   <button 
-									class="increase-item-quantity"
-									@click="increaseCartItem(good.id_product)">
-								   <i class="fas fa-plus"></i>
-							   </button>
-							</div>
-							<div class="cart__item-price">
-								<span>{{ good.price * good.quantity }}</span>$
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="cart__total-price">
-					<h3>Total price: </h3>
-					<span>{{ cartTotalPrice }}<span>$</span></span>
-				</div>
-			</div>
 	    </header>
 
 	    <main>
-	        <div class="products">
-				<template v-if="filteredItems.length">
-					<div class="product-item" v-for="item in filteredItems" :key="item.id_product">
-						<img :src="imgUrl"/>
-						<h3>{{ item.product_name }}</h3>
-						<p>{{ item.name }}</p>
-						<button class="buy-btn" @click="addToCart(item.id_product)">Купить</button>
-					</div>
-				</template>
+			<request-error v-if="requestError">Error when requesting the server</request-error>
 
-				<span class="no-data" v-else>No data...</span>
-			</div>
+			<products
+				:items="items"
+				:cart-items="cartItems"
+				:search="userSearch"/>
+
 	    </main>
 
 	</div>
+
+
+
+	<script src="js/components/CartItem.js"></script>
+	<script src="js/components/Cart.js"></script>
+	<script src="js/components/ProductsItem.js"></script>
+	<script src="js/components/Products.js"></script>
+
+	<script src="js/components/Error.js"></script>
+	<script src="js/components/CartToggle.js"></script>
+	<script src="js/components/SearchField.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
