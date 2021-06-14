@@ -4,20 +4,52 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+	<script src="https://unpkg.com/vue@next"></script>
+	<link rel="stylesheet" href="css/style.css">
 	<title>Shop</title>
 </head>
 <body>
+	<div id="app">
+		<header>
+			<a class="logo" href="#">
+				<h1>SomeLogo</h1>
+			</a>
+			
+			<div class="header__controls">
+				<div class="header__user-search">
+					<search-field v-model:search="userSearch"/>
+				</div>
+				
+				<cart-toggle v-model:is-visible="cartShow"/>
+			</div>
+			
+			<cart :goods="cartItems" :class="['cart', {active: cartShow}]"/>
 
-	<header>
-        <button class="btn-cart" type="button">Корзина</button>
-    </header>
+	    </header>
 
-    <main>
-        <div class="products"></div>
-    </main>
+	    <main>
+			<request-error v-if="requestError">Error when requesting the server</request-error>
+
+			<products
+				:items="items"
+				:cart-items="cartItems"
+				:search="userSearch"/>
+
+	    </main>
+
+	</div>
 
 
+
+	<script src="js/components/CartItem.js"></script>
+	<script src="js/components/Cart.js"></script>
+	<script src="js/components/ProductsItem.js"></script>
+	<script src="js/components/Products.js"></script>
+
+	<script src="js/components/Error.js"></script>
+	<script src="js/components/CartToggle.js"></script>
+	<script src="js/components/SearchField.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
