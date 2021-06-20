@@ -21,6 +21,9 @@ const App = {
 		RequestError
 	},
 	methods: {
+		changeLocalStorage() {
+			localStorage.setItem('cartData', JSON.stringify(this.cartItems));
+		},
 		addToCart(id) {
 			const item = this.items.find(item => item.id_product === id);
 			const cartItem = this.cartItems.find(item => item.id_product === id);
@@ -29,13 +32,16 @@ const App = {
 			} else {
 				this.increaseCartItem(id)
 			}
+			this.changeLocalStorage();
 		},
 		removeFromCart(id) {
 			const cartItem = this.cartItems.find(item => item.id_product === id);
 			this.cartItems.splice(cartItem, 1);
+			this.changeLocalStorage();
 		},
 		increaseCartItem(id){
 			this.cartItems.find(item => item.id_product === id).quantity++;
+			this.changeLocalStorage();
 		},
 		reduceCartItem(id) {
 			let cartItem = this.cartItems.find(item => item.id_product === id);
@@ -44,19 +50,24 @@ const App = {
 			} else {
 				cartItem.quantity--;
 			}
+			this.changeLocalStorage();
 		}
 	},
 	async mounted() {
 		try {
-			const data = await fetch(`${API}/atalogData.json`);
+			const data = await fetch(`/api/products`);
 			this.items = await data.json();	
 		} catch (error) {
 			this.requestError = true;
 		}
-		
-		const cartData = await fetch(`${API}/getBasket.json`);
-		let {contents} = await cartData.json();
-		this.cartItems = contents;
+		if (!localStorage.getItem('cartData')) {
+			const cartData = await fetch(`/api/cart`);
+			let {contents} = await cartData.json();
+			this.cartItems = contents;
+			localStorage.setItem('cartData', JSON.stringify(contents));
+		} else {
+			this.cartItems = JSON.parse(localStorage.getItem('cartData'));
+		}
 	}
 }
 
