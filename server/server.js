@@ -22,10 +22,10 @@ app.get('/api/cart', (req, res) => {
 
 
 
-app.use(express.static('public'));
+app.use(express.static(path.resolve(__dirname, 'src/css')));
 
 app.get('*', (req, res) => {
-	res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+	res.sendFile(path.resolve(__dirname, 'index.html'));
 });
 
 app.listen(3000);

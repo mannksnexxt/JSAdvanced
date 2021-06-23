@@ -1,4 +1,4 @@
-const CartToggle = {
+export default {
 	props: {
 		isVisible: Boolean
 	},

@@ -1,4 +1,6 @@
-const Cart = {
+import CartItem from './CartItem.js';
+
+export default {
 	props: {
 		goods: {
 			type: Array,

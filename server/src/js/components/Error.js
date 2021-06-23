@@ -1,4 +1,4 @@
-const RequestError = {
+export default {
 	data() {
 		return {
 			isVisible: true

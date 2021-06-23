@@ -1,4 +1,4 @@
-const CartItem = {
+export default {
 	props: {
 		good: {
 			type: Object,

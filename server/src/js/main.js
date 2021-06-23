@@ -1,4 +1,13 @@
+import Cart from './components/Cart.js';
+import Products from './components/Products.js';
+import SearchField from './components/SearchField.js';
+import CartToggle from './components/CartToggle.js';
+import RequestError from './components/Error.js';
+import css from '../css/style.css';
+
 const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
+
 
 
 

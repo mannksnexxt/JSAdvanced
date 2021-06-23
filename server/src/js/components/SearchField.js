@@ -1,4 +1,4 @@
-const SearchField = {
+export default {
 	props: {
 		search: {
 			type: String,

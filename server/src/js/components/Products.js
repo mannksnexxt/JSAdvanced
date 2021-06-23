@@ -1,4 +1,6 @@
-const Products = {
+import ProductsItem from "./ProductsItem.js";
+
+export default {
 	props: {
 		search: String,
 		items: Array,

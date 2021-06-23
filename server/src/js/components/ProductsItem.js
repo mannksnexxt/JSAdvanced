@@ -1,4 +1,4 @@
-const ProductsItem = {
+export default {
 	props: {
 		item: Object
 	},
